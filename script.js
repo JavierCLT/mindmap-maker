@@ -16,7 +16,7 @@ async function generateMindMap() {
   let markdown;
 
   try {
-    const response = await fetch("https://mindmap-backend.onrender.com/generate", {
+    const response = await fetch("https://mindmap-backend-yk09.onrender.com", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ topic }),
