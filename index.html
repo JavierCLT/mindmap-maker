@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindMap Maker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/markmap-lib/dist/browser/index.js"></script>
+  <script src="https://unpkg.com/markmap-view/dist/index.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>MindMap Maker</h1>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <div class="controls">
+        <label for="topic">Topic:</label>
+        <input type="text" id="topic" placeholder="Enter your topic">
+
+        <label for="api">AI Model:</label>
+        <select id="api">
+          <option value="Grok">Grok</option>
+          <option value="Claude">Claude</option>
+        </select>
+
+        <button onclick="generateMindMap()">Generate</button>
+
+        <div class="export-buttons">
+          <button onclick="exportMindMap()">Export as PNG</button>
+          <button onclick="exportMindMapAsSVG()">Export as SVG</button>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div id="mindmap"></div>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 MindMap Maker. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
