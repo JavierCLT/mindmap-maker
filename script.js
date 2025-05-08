@@ -87,7 +87,7 @@ async function generateMindMap() {
     console.error("Markmap creation error:", error);
     mindmapDiv.innerHTML = `<div class="error">Error creating mindmap: ${error.message}</div>`;
   }
-}
+} 
 
 function exportMindMap() {
   const mindmapDiv = document.getElementById("mindmap");
