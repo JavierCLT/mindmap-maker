@@ -88,6 +88,20 @@ main {
   overflow: hidden; /* Prevent scrolling */
 }
 
+.markmap-node circle {
+  fill: currentColor;
+  stroke: none;
+}
+.markmap-node text {
+  font: 14px sans-serif;
+  fill: currentColor;
+}
+.markmap-link {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1px;
+}
+
 #mindmap {
   width: 100%;
   height: 100%;
@@ -111,6 +125,7 @@ main {
   justify-content: center;
   height: 100%;
 }
+
 
 .loading::before {
   content: '';
