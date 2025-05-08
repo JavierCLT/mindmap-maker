@@ -150,7 +150,35 @@ footer p {
   height: auto !important;
 }
 
-/* Fallback: Apply colors based on node depth if color function fails */
+/* Markmap styles */
+#mindmap .markmap-node {
+  color: inherit !important;
+}
+
+#mindmap .markmap-node circle {
+  fill: currentColor !important;
+  stroke: none;
+}
+
+#mindmap .markmap-node .markmap-foreign {
+  color: inherit !important;
+}
+
+#mindmap .markmap-node .markmap-foreign .markmap-text {
+  color: inherit !important;
+}
+
+#mindmap .markmap-node .markmap-foreign .markmap-text span {
+  color: inherit !important;
+}
+
+#mindmap .markmap-link {
+  fill: none;
+  stroke: currentColor !important;
+  stroke-width: 2px;
+}
+
+/* Fallback colors based on node depth */
 #mindmap .markmap-node[data-depth="0"] {
   color: #1f77b4 !important;
 }
@@ -169,8 +197,4 @@ footer p {
 
 #mindmap .markmap-node[data-depth="4"] {
   color: #9467bd !important;
-}
-/* Ensure no other styles override Markmap colors */
-#mindmap svg * {
-  color: inherit;
 }
