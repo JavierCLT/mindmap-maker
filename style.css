@@ -150,40 +150,26 @@ footer p {
   height: auto !important;
 }
 
-/* Markmap-specific styles to ensure colors are applied */
-#mindmap .markmap-node {
-  /* Ensure the color property propagates to children */
-  color: inherit !important;
+/* Fallback: Apply colors based on node depth if color function fails */
+#mindmap .markmap-node[data-depth="0"] {
+  color: #1f77b4 !important;
 }
 
-#mindmap .markmap-node circle {
-  /* Node markers (dots) */
-  fill: currentColor !important;
-  stroke: none;
+#mindmap .markmap-node[data-depth="1"] {
+  color: #ff7f0e !important;
 }
 
-#mindmap .markmap-node .markmap-foreign {
-  /* Container for text */
-  color: inherit;
+#mindmap .markmap-node[data-depth="2"] {
+  color: #2ca02c !important;
 }
 
-#mindmap .markmap-node .markmap-foreign .markmap-text {
-  /* Text elements */
-  color: inherit !important;
+#mindmap .markmap-node[data-depth="3"] {
+  color: #d62728 !important;
 }
 
-#mindmap .markmap-node .markmap-foreign .markmap-text span {
-  /* Ensure nested spans inherit the color */
-  color: inherit !important;
+#mindmap .markmap-node[data-depth="4"] {
+  color: #9467bd !important;
 }
-
-#mindmap .markmap-link {
-  /* Lines connecting nodes */
-  fill: none;
-  stroke: currentColor !important;
-  stroke-width: 2px; /* Thicker lines for visibility */
-}
-
 /* Ensure no other styles override Markmap colors */
 #mindmap svg * {
   color: inherit;
