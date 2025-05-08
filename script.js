@@ -1,6 +1,3 @@
-// Store the Markmap instance globally to access it during export
-let markmapInstance = null;
-
 async function generateMindMap() {
   const topic = document.getElementById("topic").value.trim();
   const mindmapDiv = document.getElementById("mindmap");
@@ -10,47 +7,66 @@ async function generateMindMap() {
     return;
   }
 
-  // Show loading indicator
   mindmapDiv.innerHTML = "<div class='loading'>Generating mindmap...</div>";
 
   let markdown;
 
   try {
-    const response = await fetch("https://mindmap-backend-yk09.onrender.com", {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
+
+    const response = await fetch("https://mindmap-backend-yk09.onrender.com/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ topic }),
+      signal: controller.signal
     });
-    const data = await response.json();
-    if (data.error) {
-      alert("Error: " + data.error);
-      return;
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        throw new Error(data.error || `HTTP error! Status: ${response.status}`);
+      } else {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
     }
+
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error("Response is not JSON");
+    }
+
+    const data = await response.json();
     markdown = data.markdown;
   } catch (err) {
-    console.error(err);
-    alert("Failed to fetch from backend.");
+    console.error("Fetch error:", err);
+    if (err.name === 'AbortError') {
+      alert("Request timed out. The backend may be waking up. Please try again in a moment.");
+    } else if (err.message.includes('500')) {
+      alert("Backend error: Failed to generate mind map. Please try again later or contact support.");
+    } else {
+      alert("Failed to fetch from backend. Please check your network or try again later.");
+    }
     return;
   }
 
-  // Clear loading indicator
   mindmapDiv.innerHTML = "";
 
   try {
-    // Create an SVG element for the markmap
     const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svgElement.style.width = '100%';
     svgElement.style.height = '100%';
     mindmapDiv.appendChild(svgElement);
 
-    // Create markmap
     const { Transformer } = window.markmap;
     const Markmap = window.markmap.Markmap;
     
     const transformer = new Transformer();
     const { root } = transformer.transform(markdown);
     
-    // Create the markmap and store the instance
     markmapInstance = Markmap.create(svgElement, {
       autoFit: true,
       fitRatio: 0.95,
@@ -60,7 +76,6 @@ async function generateMindMap() {
       }
     }, root);
     
-    // Fit the markmap to the container
     setTimeout(() => {
       try {
         markmapInstance.fit();
