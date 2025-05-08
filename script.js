@@ -56,37 +56,45 @@ async function generateMindMap() {
   mindmapDiv.innerHTML = "";
 
   try {
-    const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svgElement.style.width = '100%';
-    svgElement.style.height = '100%';
-    mindmapDiv.appendChild(svgElement);
-
-    const { Transformer } = window.markmap;
-    const Markmap = window.markmap.Markmap;
-    
-    const transformer = new Transformer();
-    const { root } = transformer.transform(markdown);
-    
-    markmapInstance = Markmap.create(svgElement, {
-      autoFit: true,
-      fitRatio: 0.95,
-      color: (node) => {
-        const colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd'];
-        return colors[node.depth % colors.length];
-      }
-    }, root);
-    
-    setTimeout(() => {
-      try {
-        markmapInstance.fit();
-      } catch (fitError) {
-        console.warn("Fit error:", fitError);
-      }
-    }, 100);
-  } catch (error) {
-    console.error("Markmap creation error:", error);
-    mindmapDiv.innerHTML = `<div class="error">Error creating mindmap: ${error.message}</div>`;
+  if (!window.d3) {
+    throw new Error("D3.js library not loaded. Please refresh the page and try again.");
   }
+  if (!window.markmap || !window.markmap.Transformer || !window.markmap.Markmap) {
+    throw new Error("Markmap library not loaded. Please refresh the page and try again.");
+  }
+
+  const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svgElement.style.width = '100%';
+  svgElement.style.height = '100%';
+  mindmapDiv.appendChild(svgElement);
+
+  const { Transformer } = window.markmap;
+  const Markmap = window.markmap.Markmap;
+  
+  const transformer = new Transformer();
+  const { root } = transformer.transform(markdown);
+  
+  markmapInstance = Markmap.create(svgElement, {
+    autoFit: true,
+    fitRatio: 0.95,
+    color: (node) => {
+      const colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd'];
+      const selectedColor = colors[node.depth % colors.length];
+      console.log(`Node depth: ${node.depth}, Selected color: ${selectedColor}`);
+      return selectedColor;
+    }
+  }, root);
+  
+  setTimeout(() => {
+    try {
+      markmapInstance.fit();
+    } catch (fitError) {
+      console.warn("Fit error:", fitError);
+    }
+  }, 100);
+} catch (error) {
+  console.error("Markmap creation error:", error);
+  mindmapDiv.innerHTML = `<div class="error">Error creating mindmap: ${error.message}</div>`;
 }
 
 function exportMindMap() {
