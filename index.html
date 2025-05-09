@@ -41,9 +41,11 @@
 
   <script src="script.js"></script>
   <script>
-  window.onload = function() {
-    console.log("Window.markmap after load:", window.markmap);
-  };
+    window.onload = function() {
+      if (!window.markmap || !window.markmap.Transformer || !window.markmap.Markmap) {
+        alert("Failed to load Markmap libraries. Please refresh the page.");
+      }
+    };
   </script>
 </body>
 </html>
