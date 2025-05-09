@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/mindmap-maker/static/css/main.269e5306.css",
-    "main.js": "/mindmap-maker/static/js/main.11d89139.js",
+    "main.js": "/mindmap-maker/static/js/main.0298a20f.js",
     "static/js/453.ff2b1b9d.chunk.js": "/mindmap-maker/static/js/453.ff2b1b9d.chunk.js",
     "index.html": "/mindmap-maker/index.html",
     "main.269e5306.css.map": "/mindmap-maker/static/css/main.269e5306.css.map",
-    "main.11d89139.js.map": "/mindmap-maker/static/js/main.11d89139.js.map",
+    "main.0298a20f.js.map": "/mindmap-maker/static/js/main.0298a20f.js.map",
     "453.ff2b1b9d.chunk.js.map": "/mindmap-maker/static/js/453.ff2b1b9d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.269e5306.css",
-    "static/js/main.11d89139.js"
+    "static/js/main.0298a20f.js"
   ]
 }
